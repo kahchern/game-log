@@ -1,71 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>My Game Log</title>
-  <style>
-    body{margin:0;font-family:system-ui,sans-serif;color:#333;line-height:1.4}
-    header,footer{background:#f5f5f5;padding:1em;text-align:center}
-    main{padding:1em}
-    section{margin-bottom:2em}
-    h2{margin-bottom:.5em;font-size:1.2em}
-    ul{list-style:disc;padding-left:1.5em}
-    table{width:100%;border-collapse:collapse}
-    th,td{padding:.5em;border-bottom:1px solid #ddd;text-align:left}
-  </style>
-</head>
-<body>
-  <header>
-    <h1>🎮 My Game Log</h1>
-  </header>
-  <main>
-    <section id="consoles">
-      <h2>Consoles</h2>
-      <ul>
-        <li>SNES</li>
-        <li>PS 2</li>
-        <li>Switch</li>
-        <li>2DS XL</li>
-        <li>Game Boy Advanced</li>
-        <li>Game Boy Colour</li>
-        <li>Analogue Pocket</li>
-        <!-- add more as needed -->
-      </ul>
-    </section>
-    <section id="playing">
-      <h2>Currently Playing</h2>
-      <ul>
-        <li>Pokemon Silver</li>
-        <!-- update this list as you go -->
-      </ul>
-    </section>
-    <section id="library">
-      <h2>Library &amp; Reviews</h2>
-      <table>
-        <thead>
-          <tr><th>Title</th><th>Platform</th><th>My Rating</th><th>Notes</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Pokemon Red</td>
-            <td>Game</td>
-            <td>5/5</td>
-            <td>Fundamental</td>
-          </tr>
-          <tr>
-            <td>Metroid Fusion</td>
-            <td>GBA</td>
-            <td>4/5</td>
-            <td>Classic exploration, short but sweet</td>
-          </tr>
-          <!-- add your played games here -->
-        </tbody>
-      </table>
-    </section>
-  </main>
-  <footer>
-    <p>&copy; 2025</p>
-  </footer>
-</body>
-</html>
+<!doctype html>
+<meta charset="utf-8">
+<title>Pokémon</title>
+<style>
+  body{font:16px sans-serif;text-align:center;margin:2em}
+  input{width:4em;text-align:center}
+  button{margin-left:.5em}
+  img{image-rendering:pixelated;width:128px;height:128px}
+</style>
+<main>
+  <h1>Pokémon Lookup</h1>
+  <input id="i" type="number" min="1" max="1010" placeholder="1">
+  <button onclick="g()">Go</button>
+  <p id="n"></p>
+  <img id="m" alt="">
+</main>
+<script>
+  async function g(){
+    let v=i.value;
+    if(!v) return;
+    try {
+      let r=await fetch('https://pokeapi.co/api/v2/pokemon/'+v);
+      if(!r.ok) throw 0;
+      let j=await r.json();
+      n.textContent = j.name.replace(/^./,c=>c.toUpperCase());
+      m.src = j.sprites.front_default||'';
+    } catch {
+      n.textContent = 'Not found';
+      m.src = '';
+    }
+  }
+</script>
